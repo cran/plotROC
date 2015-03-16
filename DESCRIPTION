@@ -1,8 +1,8 @@
 Package: plotROC
 Type: Package
 Title: Generate Useful ROC Curve Charts for Print and Interactive Use
-Version: 1.3
-Date: 2015-01-27
+Version: 1.3.3
+Date: 2015-03-12
 Author: Michael C Sachs
 Maintainer: Michael C Sachs <sachsmc@gmail.com>
 Description: Most ROC curve plots obscure the cutoff values and inhibit
@@ -16,9 +16,9 @@ URL: http://sachsmc.github.io/plotROC
 BugReports: http://github.com/sachsmc/plotROC/issues
 Depends: R (>= 3.0.0)
 Imports: grid, ggplot2, gridSVG, shiny
-Suggests: ggthemes, knitr, testthat
+Suggests: ggthemes, knitr, testthat, stringr, ROCR
 VignetteBuilder: knitr
-Packaged: 2015-01-27 18:29:15 UTC; sachsmc
+Packaged: 2015-03-16 13:20:00 UTC; sachsmc
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2015-01-27 23:36:18
+Date/Publication: 2015-03-16 15:25:17
