@@ -20,22 +20,23 @@ shinyUI(navbarPage("ROC Plot",
                                       
                                       fluidRow(
                                         column(4, 
-                                               h4("Select and upload data"), 
-                                               selectInput("data", "Data set to analyze", choices = c("example"), selected = "example"),
-                                               fileInput("upload", "Upload Data", accept = c('text/csv', 'text/comma-separated-values,text/plain'), multiple = TRUE), 
-                                               helpText("Files must be comma-delimited, with header containing column names. At least one column must contain the binary (0/1) outcome, and one must contain the continuous marker or predictor.")), 
+                                               h4("Upload and select data"), 
+                                               fileInput("upload", strong("Upload Data"), accept = c('text/csv', 'text/comma-separated-values,text/plain'), multiple = TRUE), 
+                                               helpText("Files must be comma-delimited, with header containing column names. At least one column must contain the binary (0/1) outcome, and one must contain the continuous marker or predictor."),
+                                               selectInput("data", strong("Select dataset to analyze"), choices = c("example"), selected = "example"))
+                                               , 
                                         column(4, 
                                                h4("Specify Variables"),
                                                selectInput("D", "Outcome variable", choices = colnames(example), selected = colnames(example)[3]), 
                                                checkboxInput("multi", "Check to plot multiple curves"), 
                                                conditionalPanel("input.multi == false",
-                                                  selectInput("M", "Marker", choices = colnames(example), selected = colnames(example)[1]), 
-                                                  numericInput("alpha", "Confidence level", .05, min = .01, max = .99, step = .01), 
-                                                  textInput("ci.at", "Cutoffs for CIs (separate multiple by commas)", value = "")
+                                                  selectInput("M", "Marker", choices = colnames(example), selected = colnames(example)[1])
                                                ), 
                                                conditionalPanel("input.multi == true", 
                                                   selectInput("Ms", "Marker", choices = colnames(example), multiple = TRUE, selected = colnames(example)[1])              
-                                                                )), 
+                                                                ), 
+                                               numericInput("alpha", "Significance level", .05, min = .01, max = .99, step = .01), 
+                                               textInput("ci.at", "Cutoffs for CIs (separate multiple by commas, leave blank to autoselect, NULL for no CIs)", value = "")), 
                                         column(4, 
                                                h4("Plot options"),
                                                textInput("title", "Plot Title", value = ""), 
@@ -45,7 +46,7 @@ shinyUI(navbarPage("ROC Plot",
                                                numericInput("adj.y", "label adjust Y", 0, min = -1, max = 1, step = .01),
                                                numericInput("angle", "label angle", 45, min = 0, max = 180, step = 1), 
                                                numericInput("n.cuts", "Number of cutoff values", 20, min = 0, max = 20), 
-                                               numericInput("font.size", "Cutoff font size", 12, min = 1, max = 32)
+                                               numericInput("round", "Number of significant digits", 1, min = 0, max = 4, step = 1)
                                                )
                                       )
                                       

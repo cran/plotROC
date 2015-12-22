@@ -1,10 +1,28 @@
-# About
+
+[![Build Status](https://travis-ci.org/sachsmc/plotROC.png?branch=master)](https://travis-ci.org/sachsmc/plotROC)
+[![DOI](https://zenodo.org/badge/9473/sachsmc/plotROC.svg)](http://dx.doi.org/10.5281/zenodo.14678)
+[![](http://cranlogs.r-pkg.org/badges/plotROC)](http://cran.rstudio.com/web/packages/plotROC/index.html)
+
+# Generate interactive ROC plots from R using ggplot
 
 Most ROC curve plots obscure the cutoff values and inhibit
     interpretation and comparison of multiple curves. This attempts to address
-    those shortcomings by providing plotting and interactive tools. 
+    those shortcomings by providing plotting and interactive tools. Functions
+    are provided to generate an interactive ROC curve plot for web use, and
+    print versions. An interacive Shiny application is also included.
+    
+## Installation
 
-This is a web-based implementation of the `plotROC` package in `R`. You can learn more about the plotROC package here: [plotROC homepage](http://sachsmc.github.io/plotROC)
+This version of the package is not on CRAN. It also requires the development version of ggplot2. It can be installed with
+
+```r
+devtools::install_github("hadley/ggplot2")
+devtools::install_github("sachsmc/plotROC")
+```
+
+## Basic usage
+
+See examples live [here](http://sachsmc.github.io/plotROC)
 
 # Acknowledgements
 
@@ -13,11 +31,9 @@ This package would not be possible without the following:
   - [ggplot2](http://ggplot2.org/)
   - [gridSVG](http://sjp.co.nz/projects/gridsvg/)
   - [d3.js](http://d3js.org)
-  - [shiny](http://shiny.rstudio.com)
   
-# License 
-
-## The MIT License (MIT)
+# License
+The MIT License (MIT)
 
 Copyright (c) 2014 Michael C Sachs
 
@@ -38,3 +54,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+  
