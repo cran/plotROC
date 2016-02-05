@@ -73,10 +73,10 @@ StatRoc <- ggproto("StatRoc", Stat,
 #' @export
 #' @rdname stat_roc
 #' @examples
-#' D.ex <- rbinom(250, 1, .5)
+#' D.ex <- rbinom(50, 1, .5)
 #' rocdata <- data.frame(D = c(D.ex, D.ex), 
-#'                    M = c(rnorm(250, mean = D.ex, sd = .4), rnorm(250, mean = D.ex, sd = 1)), 
-#'                    Z = c(rep("A", 250), rep("B", 250)))
+#'                    M = c(rnorm(50, mean = D.ex, sd = .4), rnorm(50, mean = D.ex, sd = 1)), 
+#'                    Z = c(rep("A", 50), rep("B", 50)))
 #'
 #' ggplot(rocdata, aes(m = M, d = D)) + stat_roc()
 
@@ -116,16 +116,18 @@ stat_roc <- function(mapping = NULL, data = NULL, geom = "roc",
 #' @export
 #' @rdname geom_roc
 #' @examples
-#' D.ex <- rbinom(250, 1, .5)
+#' D.ex <- rbinom(50, 1, .5)
 #' rocdata <- data.frame(D = c(D.ex, D.ex), 
-#'                    M = c(rnorm(250, mean = D.ex, sd = .4), rnorm(250, mean = D.ex, sd = 1)), 
-#'                    Z = c(rep("A", 250), rep("B", 250)))
+#'                    M = c(rnorm(50, mean = D.ex, sd = .4), rnorm(50, mean = D.ex, sd = 1)), 
+#'                    Z = c(rep("A", 50), rep("B", 50)))
 #'
 #' ggplot(rocdata, aes(m = M, d = D)) + geom_roc()
+#' \donttest{
 #' ggplot(rocdata, aes(m = M, d = D, color = Z)) + geom_roc()
 #' ggplot(rocdata, aes(m = M, d = D)) + geom_roc() + facet_wrap(~ Z)
-#' ggplot(rocdata, aes(m = M, d = D)) + geom_roc(n.cuts = 50)
+#' ggplot(rocdata, aes(m = M, d = D)) + geom_roc(n.cuts = 20)
 #' ggplot(rocdata, aes(m = M, d = D)) + geom_roc(labels = FALSE)
+#' }
 
 GeomRoc <- ggproto("GeomRoc", Geom, 
                    required_aes = c("x", "y", "label"), 
@@ -312,7 +314,11 @@ geom_roc <- function(mapping = NULL, data = NULL, stat = "roc", n.cuts = 10, arr
   layer(
     geom = GeomRoc, mapping = mapping, data = data, stat = stat, 
     position = position, show.legend = show.legend, inherit.aes = inherit.aes, 
-    params = list(na.rm = na.rm, ...)
+    params = list(na.rm = na.rm, n.cuts = n.cuts, arrow = arrow,
+                     lineend = lineend, linejoin = linejoin, linemitre = linemitre, 
+                     alpha.line = alpha.line, alpha.point = alpha.point,
+                     size.point = size.point, labels = labels, labelsize = labelsize, labelround = labelround,
+                    ...)
   )
 }
 

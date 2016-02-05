@@ -1,8 +1,8 @@
 Package: plotROC
 Type: Package
 Title: Generate Useful ROC Curve Charts for Print and Interactive Use
-Version: 2.0.0
-Date: 2015-12-21
+Version: 2.0.1
+Date: 2016-02-05
 Author: Michael C Sachs
 Maintainer: Michael C Sachs <sachsmc@gmail.com>
 Description: Most ROC curve plots obscure the cutoff values and inhibit
@@ -20,6 +20,6 @@ Suggests: knitr, testthat, stringr, survivalROC
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2015-12-22 17:16:45 UTC; sachsmc
+Packaged: 2016-02-05 16:46:10 UTC; sachsmc
 Repository: CRAN
-Date/Publication: 2015-12-22 20:51:01
+Date/Publication: 2016-02-05 21:48:08
