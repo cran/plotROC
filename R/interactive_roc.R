@@ -1,4 +1,3 @@
-
 #' Generate svg code for an ROC curve object
 #' 
 #' Takes a ggplot object that contains a GeomRoc layer and returns a string that
@@ -32,6 +31,7 @@
 #' 
 #' @return A character object containing the html necessary to plot the ROC 
 #'   curve in a web browser
+#' @importFrom utils packageVersion
 #'   
 export_interactive_roc <- function(ggroc_p, add.cis = TRUE, hide.points = FALSE, 
                                    prefix = "a", 
@@ -61,7 +61,17 @@ export_interactive_roc <- function(ggroc_p, add.cis = TRUE, hide.points = FALSE,
       
     } else {
       
-      Mran <- ggroc_p$data[, paste(ggroc_p$mapping$m)]
+      if (packageVersion("ggplot2") <= "2.2.1") {
+        
+        Mran.name <- paste(ggroc_p$mapping$m)
+        
+      } else {
+        
+        Mran.name <- quo_name(ggroc_p$mapping$m)
+        
+      }
+      
+      Mran <- ggroc_p$data[, Mran.name]
       if(length(Mran) > 100){
         
         thisciat <- sort(unique(sample(Mran, 100)))
