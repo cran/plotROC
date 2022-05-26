@@ -1,10 +1,10 @@
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE, warning = FALSE---------------------------------------------
 library(knitr)
 knit_hooks$set(source = function(x, options){
   if (!is.null(options$verbatim) && options$verbatim){
     opts = gsub(",\\s*verbatim\\s*=\\s*TRUE\\s*", "", options$params.src)
     opts = gsub(",\\s*eval\\s*=\\s*FALSE\\s*", "", opts)
-    bef = sprintf('\n\n    ```{r %s}\n', opts, "\n")
+    bef = sprintf('\n\n    ```{r %s}\n', opts)
     stringr::str_c(
       bef, 
       knitr:::indent_block(paste(x, collapse = '\n'), "    "), 
@@ -17,15 +17,15 @@ knit_hooks$set(source = function(x, options){
   }
 })
 
-## ----load, eval = FALSE--------------------------------------------------
-#  devtools::install_github("hadley/ggplot2")
-#  devtools::install_github("sachsmc/plotROC")
+## ----load, eval = FALSE-------------------------------------------------------
+#  install.packages("ggplot2")
+#  install.packages("plotROC")
 #  library(plotROC)
 
-## ----shiny, eval = FALSE-------------------------------------------------
+## ----shiny, eval = FALSE------------------------------------------------------
 #  shiny_plotROC()
 
-## ----dataset, echo = -1--------------------------------------------------
+## ----dataset, echo = -1-------------------------------------------------------
 library(plotROC)
 set.seed(2529)
 D.ex <- rbinom(200, size = 1, prob = .5)
@@ -35,19 +35,19 @@ M2 <- rnorm(200, mean = D.ex, sd = 1.5)
 test <- data.frame(D = D.ex, D.str = c("Healthy", "Ill")[D.ex + 1], 
                    M1 = M1, M2 = M2, stringsAsFactors = FALSE)
 
-## ----calc----------------------------------------------------------------
+## ----calc---------------------------------------------------------------------
 basicplot <- ggplot(test, aes(d = D, m = M1)) + geom_roc()
 basicplot
 
-## ----warn----------------------------------------------------------------
+## ----warn---------------------------------------------------------------------
 ggplot(test, aes(d = D.str, m = M1)) + geom_roc()
 
-## ----opts----------------------------------------------------------------
+## ----opts---------------------------------------------------------------------
 ggplot(test, aes(d = D, m = M1)) + geom_roc(n.cuts = 0)
 ggplot(test, aes(d = D, m = M1)) + geom_roc(n.cuts = 5, labelsize = 5, labelround = 2)
 ggplot(test, aes(d = D, m = M1)) + geom_roc(n.cuts = 50, labels = FALSE)
 
-## ----style---------------------------------------------------------------
+## ----style--------------------------------------------------------------------
 styledplot <- basicplot + style_roc()
 styledplot
 basicplot + style_roc(theme = theme_grey, xlab = "1 - Specificity")
@@ -55,13 +55,13 @@ basicplot + style_roc(theme = theme_grey, xlab = "1 - Specificity")
 direct_label(basicplot) + style_roc()
 direct_label(basicplot, labels = "Biomarker", nudge_y = -.1) + style_roc()
 
-## ----test-a-ci-----------------------------------------------------------
+## ----test-a-ci----------------------------------------------------------------
 styledplot + geom_rocci()
 styledplot + geom_rocci(sig.level = .01)
 ggplot(test, aes(d = D, m = M1)) + geom_roc(n.cuts = 0) +
   geom_rocci(ci.at = quantile(M1, c(.1, .4, .5, .6, .9))) + style_roc()
 
-## ----inter, eval = FALSE-------------------------------------------------
+## ----inter, eval = FALSE------------------------------------------------------
 #  plot_interactive_roc(basicplot)
 
 ## ----int-no, fig.keep='none', results = 'asis', eval = FALSE, verbatim = TRUE----
@@ -76,14 +76,14 @@ cat(
                         prefix = "a")
   )
 
-## ----head----------------------------------------------------------------
+## ----head---------------------------------------------------------------------
 head(test)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 longtest <- melt_roc(test, "D", c("M1", "M2"))
 head(longtest)
 
-## ----group---------------------------------------------------------------
+## ----group--------------------------------------------------------------------
 ggplot(longtest, aes(d = D, m = M, color = name)) + geom_roc() + style_roc()
 ggplot(longtest, aes(d = D, m = M, color = name)) + geom_roc(n.cuts = 0) + style_roc()
 ggplot(longtest, aes(d = D, m = M)) + geom_roc() + facet_wrap(~ name) + style_roc()
@@ -97,39 +97,47 @@ pairplot + geom_rocci()
 pairplot + geom_rocci(linetype = 1)
 pairplot + geom_rocci()
 
-## ----grp1, fig.keep='none', results = 'asis', fig.width=7, fig.height=7----
+## ----grp1, fig.keep='none', results = 'asis', fig.width=7, fig.height=7-------
 cat(
   export_interactive_roc(direct_label(pairplot), 
                         prefix = "b")
   )
 
-## ----grp3, fig.keep='none', results = 'asis', fig.width=12, fig.height=6----
+## ----grp3, fig.keep='none', results = 'asis', fig.width=12, fig.height=6------
 cat(
   export_interactive_roc(
     ggplot(longtest, aes(d = D, m = M)) + geom_roc() + facet_wrap(~ name), 
                         prefix = "c", width = 10, height = 5)
   )
 
-## ----ex2-----------------------------------------------------------------
+## ----ex2----------------------------------------------------------------------
 D.cov <- rbinom(400, 1, .5)
 gender <- c("Male", "Female")[rbinom(400, 1, .49) + 1]
 M.diff <- rnorm(400, mean = D.cov, sd = ifelse(gender == "Male", .5, 1.5))
 
 test.cov <- data.frame(D = D.cov, gender = gender, M = M.diff)
 
-## ----covplot-------------------------------------------------------------
+## ----covplot------------------------------------------------------------------
 bygend <- ggplot(test.cov, aes(d = D, m = M, color = gender)) + geom_roc(show.legend = FALSE)
 direct_label(bygend) + style_roc()
 
-## ----cuslab--------------------------------------------------------------
+## ----auctab-------------------------------------------------------------------
+test.cov2 <- data.frame(D = D.cov, gender = gender, M = M.diff, 
+                        group = c("A", "B")[rbinom(400, 1, .4) + 1])
+bygend2 <- ggplot(test.cov2, aes(d = D, m = M, color = gender)) + 
+           geom_roc() + facet_wrap(~ group)
+calc_auc(bygend2)
+
+
+## ----cuslab-------------------------------------------------------------------
 ggplot(test, aes(d = D, m = M1)) + geom_roc(cutoffs.at = c(2, 1, .5, 0, -.5, -1))
 ggplot(test, aes(d = D, m = M1)) + geom_roc(cutoffs.at = c(2, 1, .5, 0, -.5, -1), cutoff.labels = letters[1:6])
 
-## ----increasing----------------------------------------------------------
+## ----increasing---------------------------------------------------------------
 ggplot(test, aes(d = D, m = M1)) + geom_roc(increasing = FALSE)
 ggplot(test, aes(d = D, m = -M1)) + geom_roc(increasing = FALSE)
 
-## ----themes--------------------------------------------------------------
+## ----themes-------------------------------------------------------------------
 basicplot + 
   style_roc(theme = theme_grey) +
   theme(axis.text = element_text(colour = "blue")) +
@@ -138,7 +146,7 @@ basicplot +
            label = paste("AUC =", round(calc_auc(basicplot)$AUC, 2))) +
   scale_x_continuous("1 - Specificity", breaks = seq(0, 1, by = .1))
 
-## ----binorm--------------------------------------------------------------
+## ----binorm-------------------------------------------------------------------
 D.ex <- test$D
 M.ex <- test$M1
 mu1 <- mean(M.ex[D.ex == 1])
@@ -156,7 +164,7 @@ binorm.plot <- ggplot(binorm.roc, aes(x = FPF, y = TPF, label = c)) +
   geom_roc(stat = "identity") + style_roc(theme = theme_grey)
 binorm.plot
 
-## ----surv----------------------------------------------------------------
+## ----surv---------------------------------------------------------------------
 library(survivalROC)
 survT <- rexp(350, 1/5)
 cens <- rbinom(350, 1, .1)
