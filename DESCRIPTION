@@ -1,8 +1,8 @@
 Package: plotROC
 Type: Package
 Title: Generate Useful ROC Curve Charts for Print and Interactive Use
-Version: 2.3.0
-Date: 2022-05-26
+Version: 2.3.1
+Date: 2023-10-05
 Authors@R: c(person("Michael C.", "Sachs", role = c("aut", "cre"),
                      email = "sachsmc@gmail.com"),
               person("Robert W.", "Corty", role = "ctb",
@@ -23,11 +23,11 @@ Depends: R (>= 3.0.0), ggplot2
 Imports: methods, grid, gridSVG, shiny, plyr, rlang
 Suggests: knitr, testthat, stringr, survivalROC, rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2022-05-26 12:40:21 UTC; micsac
+Packaged: 2023-10-06 12:13:25 UTC; sachsmc
 Author: Michael C. Sachs [aut, cre],
   Robert W. Corty [ctb],
   Luis Crouch [ctb] (Modification to calc_auc)
 Repository: CRAN
-Date/Publication: 2022-05-26 13:10:07 UTC
+Date/Publication: 2023-10-06 12:40:02 UTC

@@ -1,4 +1,4 @@
-## ---- echo=FALSE, warning = FALSE---------------------------------------------
+## ----echo=FALSE, warning = FALSE----------------------------------------------
 library(knitr)
 knit_hooks$set(source = function(x, options){
   if (!is.null(options$verbatim) && options$verbatim){
